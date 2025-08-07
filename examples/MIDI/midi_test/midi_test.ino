@@ -19,6 +19,11 @@
 #include <Adafruit_TinyUSB.h>
 #include <MIDI.h>
 
+#define RXD2 2 // t-display-s3 Serial2
+#define TXD2 3 // t-display-s3 Serial2
+
+#define MYSERIAL Serial2
+
 // USB MIDI object
 Adafruit_USBD_MIDI usb_midi;
 
@@ -42,7 +47,9 @@ void setup() {
     TinyUSBDevice.begin(0);
   }
 
-  Serial.begin(115200);
+  //MYSERIAL.begin(115200);
+	MYSERIAL.begin(115200, SERIAL_8N1, RXD2, TXD2);
+
 
   usb_midi.setStringDescriptor("TinyUSB MIDI");
 
@@ -111,24 +118,24 @@ void loop() {
 
 void handleNoteOn(byte channel, byte pitch, byte velocity) {
   // Log when a note is pressed.
-  Serial.print("Note on: channel = ");
-  Serial.print(channel);
+  MYSERIAL.print("Note on: channel = ");
+  MYSERIAL.print(channel);
 
-  Serial.print(" pitch = ");
-  Serial.print(pitch);
+  MYSERIAL.print(" pitch = ");
+  MYSERIAL.print(pitch);
 
-  Serial.print(" velocity = ");
-  Serial.println(velocity);
+  MYSERIAL.print(" velocity = ");
+  MYSERIAL.println(velocity);
 }
 
 void handleNoteOff(byte channel, byte pitch, byte velocity) {
   // Log when a note is released.
-  Serial.print("Note off: channel = ");
-  Serial.print(channel);
+  MYSERIAL.print("Note off: channel = ");
+  MYSERIAL.print(channel);
 
-  Serial.print(" pitch = ");
-  Serial.print(pitch);
+  MYSERIAL.print(" pitch = ");
+  MYSERIAL.print(pitch);
 
-  Serial.print(" velocity = ");
-  Serial.println(velocity);
+  MYSERIAL.print(" velocity = ");
+  MYSERIAL.println(velocity);
 }
